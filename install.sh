@@ -13,7 +13,7 @@ install_github_bundle() {
 	local bundle_dir="${INSTALLDIR}/.vim/bundle/${2}"
 
 	if [ -d "${bundle_dir}" ]; then
-		echo -e "\tDirectory already exists! Skipping."
+		echo -e "\tdirectory already exists, skipping ${2}"
 		return
 	fi
 
@@ -55,7 +55,7 @@ COPIED_FILES=(
 
 LINKED_FILES=(
 	["vim"]="${INSTALLDIR}/.vim" \
-	["tmux.conf"]="${INSTALLDIR}/.tmux.conf" \
+	["tmux-linux.conf"]="${INSTALLDIR}/.tmux.conf" \
 	["vimrc"]="${INSTALLDIR}/.vimrc" \
 	["vimrc.bundles"]="${INSTALLDIR}/.vimrc.bundles" \
 )
@@ -74,20 +74,20 @@ echo "# Copying files"
 for copy_file in "${!COPIED_FILES[@]}"; do
 	target=${COPIED_FILES["${copy_file}"]}
 	echo -e "\t${copy_file} => ${target}"
-	cp "${copy_file}" "${target}"
+	cp "${copy_file}" "${target}" 2>/dev/null
 done
 
 echo "# Linking files"
 for file in "${!LINKED_FILES[@]}"; do
 	target=${LINKED_FILES["${file}"]}
 	echo -e "\t${file} => ${target}"
-	ln -s "${PWD}/${file}" "${target}"
+	ln -s "${PWD}/${file}" "${target}" 2>/dev/null
 done
 
 echo "# Installing packages"
 distro_install_cmd
 for package in ${PACKAGES[@]}; do
-	install_system_package "${package}"
+	install_system_package "${package}" 2>/dev/null
 done
 
 echo "# Installing vundle"
