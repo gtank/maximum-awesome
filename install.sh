@@ -55,8 +55,10 @@ COPIED_FILES=(
 
 LINKED_FILES=(
 	["vim"]="${INSTALLDIR}/.vim" \
+        ["vim"]="${INSTALLDIR}/.nvim" \
 	["tmux-linux.conf"]="${INSTALLDIR}/.tmux.conf" \
 	["vimrc"]="${INSTALLDIR}/.vimrc" \
+	["vimrc"]="${INSTALLDIR}/.nvimrc" \
 	["vimrc.bundles"]="${INSTALLDIR}/.vimrc.bundles" \
 )
 
@@ -91,7 +93,7 @@ for package in ${PACKAGES[@]}; do
 done
 
 echo "# Installing vundle"
-install_github_bundle "gmarik" "vundle.vim"
+install_github_bundle "gmarik" "vundle"
 vim -c "PluginInstall!" -c "q" -c "q"
 
 echo "# Installing Solarized colorscheme for Gnome Terminal"
